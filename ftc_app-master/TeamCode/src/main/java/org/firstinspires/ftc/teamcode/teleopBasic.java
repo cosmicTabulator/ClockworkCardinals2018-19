@@ -23,32 +23,35 @@ import com.qualcomm.robotcore.util.Range;
 
 @TeleOp(name="teleopBasic", group="Teleop")
 @Disabled
-public class teleoBasic extends LinearOpMode {
+public class teleopBasic extends LinearOpMode {
 
-    // Declare OpMode members.
-    private ElapsedTime runtime = new ElapsedTime();
-    private DcMotor leftDrive = null;
-    private DcMotor rightDrive = null;
+    basicHardware robot = new basicHardware();
 
     @Override
-    public void runOpMode() {
+    public void runOpMode() throws InterruptedException{
 
-        leftDrive  = hardwareMap.get(DcMotor.class, "left_drive");
-        rightDrive = hardwareMap.get(DcMotor.class, "right_drive");
+        float left, right = 0;
 
-        leftDrive.setDirection(DcMotor.Direction.FORWARD);
-        rightDrive.setDirection(DcMotor.Direction.REVERSE);
+        robot.init(hardwareMap);
 
         waitForStart();
-        runtime.reset();
 
         while (opModeIsActive()) {
 
 
-            leftDrive.setPower(0);
-            rightDrive.setPower(0);
+            left = gamepad1.left_stick_y;
+            right = gamepad1.right_stick_y;
+
+            robot.left.setPower(left);
+            robot.right.setPower(right);
+
+            telemetry.addData("Left Power", left);
+            telemetry.addData("Right Power", right);
 
             telemetry.update();
+
+            robot.waitForTick(10);
+            idle();
         }
     }
 }
