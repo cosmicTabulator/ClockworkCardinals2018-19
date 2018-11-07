@@ -42,7 +42,7 @@ public class teleopArmBot extends LinearOpMode {
             left = gamepad1.left_stick_y;
             right = gamepad1.right_stick_y;
 
-            arm = gamepad1.right_bumper;
+            arm = gamepad1.right_bumper - gamepad1.left_bumper;
 
             robot.left.setPower(left);
             robot.right.setPower(right);
