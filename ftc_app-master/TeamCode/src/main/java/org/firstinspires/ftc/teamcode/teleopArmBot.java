@@ -22,16 +22,18 @@ import com.qualcomm.robotcore.util.Range;
  */
 
 @TeleOp(name="teleopArmBot", group="Teleop")
-@Disabled
+
 public class teleopArmBot extends LinearOpMode {
 
-    basicHardware robot = new basicHardware();
+    armBotHardware robot = new armBotHardware();
 
     @Override
     public void runOpMode() throws InterruptedException{
 
-        float left, right, arm = 0;
+        float left, right, armPos = 0;
+        float f = 0.15f;
 
+        float arm = 0;
         robot.init(hardwareMap);
 
         waitForStart();
@@ -42,15 +44,21 @@ public class teleopArmBot extends LinearOpMode {
             left = gamepad1.left_stick_y;
             right = gamepad1.right_stick_y;
 
-            arm = gamepad1.right_bumper - gamepad1.left_bumper;
+            //arm = arm + f*(gamepad1.right_trigger - gamepad1.left_trigger);
 
+            arm = f*(gamepad1.right_trigger - gamepad1.left_trigger);
             robot.left.setPower(left);
             robot.right.setPower(right);
 
+            armPos = robot.arm.getCurrentPosition();
+
+            //robot.arm.setPower(Math.atan(armPos - arm))
             robot.arm.setPower(arm);
 
             telemetry.addData("Left Power", left);
             telemetry.addData("Right Power", right);
+            //telemetry.addData("Arm Target", arm);
+            telemetry.addData("Arm Position", armPos);
             telemetry.addData("Arm Power", arm);
 
             telemetry.update();

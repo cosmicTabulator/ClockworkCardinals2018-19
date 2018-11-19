@@ -20,7 +20,7 @@ public class armBotHardware {
     HardwareMap hwMap = null;
     private ElapsedTime period = new ElapsedTime();
 
-    public basicHardware(){
+    public armBotHardware(){
     }
 
     public void init(HardwareMap ahwMap){
@@ -32,6 +32,7 @@ public class armBotHardware {
         arm = hwMap.dcMotor.get("Arm");
 
         left.setDirection(DcMotorSimple.Direction.REVERSE);
+        arm.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
         right.setPower(0);
         left.setPower(0);
