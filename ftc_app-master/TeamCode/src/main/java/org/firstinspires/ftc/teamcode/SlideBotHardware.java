@@ -13,6 +13,7 @@ public class SlideBotHardware {
     public DcMotor right = null;
     public DcMotor left = null;
     public DcMotor slide = null;
+    public DcMotor sweeper = null;
 
     HardwareMap hwMap = null;
     private ElapsedTime period = new ElapsedTime();
@@ -27,16 +28,19 @@ public class SlideBotHardware {
         right = hwMap.dcMotor.get("Right");
         left = hwMap.dcMotor.get("Left");
         slide = hwMap.dcMotor.get("Slide");
+        sweeper = hwMap.dcMotor.get("Sweeper");
 
         right.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         left.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         slide.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        sweeper.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
         right.setDirection(DcMotor.Direction.REVERSE);
 
         right.setPower(0);
         left.setPower(0);
         slide.setPower(0);
+        sweeper.setPower(0);
 
     }
 
