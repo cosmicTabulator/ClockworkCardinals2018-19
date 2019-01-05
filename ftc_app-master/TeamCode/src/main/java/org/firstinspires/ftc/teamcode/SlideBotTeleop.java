@@ -25,13 +25,7 @@ public class SlideBotTeleop extends LinearOpMode {
         float drive;
         float turn;
 
-        int motorPos = 0;
-
         float slide;
-
-        int cooldown = 0;
-        double position = 0.5;
-        double armPos = 0.5;
 
         robot.init(hardwareMap);
 
@@ -55,42 +49,7 @@ public class SlideBotTeleop extends LinearOpMode {
 
             slide = gamepad2.left_stick_y;
 
-            if(gamepad2.left_bumper == true){
-                motorPos = robot.slide.getCurrentPosition();
-            }
-
-
-            if(gamepad2.right_bumper == true) {
-                if (motorPos < robot.slide.getCurrentPosition()) {
-                    slide = 0.05f;
-                }
-
-                if (motorPos > robot.slide.getCurrentPosition()) {
-                    slide = -0.05f;
-                }
-
-                if (motorPos == robot.slide.getCurrentPosition()) {
-                    slide = 0;
-                }
-            }
-
             robot.slide.setPower(slide);
-
-            if(gamepad2.dpad_up){
-                position = 0.65;
-            }
-
-            if(gamepad2.x){
-                armPos = 0.9;
-            }
-
-            if(gamepad2.b){
-                armPos = 0.0;
-            }
-
-            if(gamepad2.dpad_down){
-                position = 0;
-            }
 
 
             robot.latchUp.setPosition(position);

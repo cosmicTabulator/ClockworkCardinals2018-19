@@ -14,11 +14,6 @@ public class SlideBotHardware {
     public DcMotor left = null;
     public DcMotor slide = null;
 
-    public Servo latchUp = null;
-    public Servo latchDown = null;
-
-    public Servo arm = null;
-
     HardwareMap hwMap = null;
     private ElapsedTime period = new ElapsedTime();
 
@@ -33,11 +28,6 @@ public class SlideBotHardware {
         left = hwMap.dcMotor.get("Left");
         slide = hwMap.dcMotor.get("Slide");
 
-        latchUp = hwMap.servo.get("LatchUp");
-        latchDown = hwMap.servo.get("LatchDown");
-
-        arm = hwMap.servo.get("Arm");
-
         right.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         left.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         slide.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
@@ -47,11 +37,6 @@ public class SlideBotHardware {
         right.setPower(0);
         left.setPower(0);
         slide.setPower(0);
-
-        latchUp.setPosition(0);
-        latchDown.setPosition(1);
-
-        arm.setPosition(0.6);
 
     }
 
