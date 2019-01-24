@@ -20,13 +20,19 @@ public class SlideBotTeleop extends LinearOpMode {
         float lPower = 0;
         float rPower = 0;
 
-        float c = -0.5f;
+        float c = 0.6f;
+        float s = 1f;
 
         float drive;
         float turn;
 
         float slide;
         float sweeper;
+
+        boolean speedDown = false;
+        boolean sweeperDown = false;
+
+        boolean armUp = false;
 
         robot.init(hardwareMap);
 
@@ -36,28 +42,54 @@ public class SlideBotTeleop extends LinearOpMode {
 
         while(opModeIsActive()){
 
-            if(gamepad1.right_bumper){
-                c = 0.6f;
-            } else{
-                c = 0.25f;
+            if(gamepad1.right_bumper && !speedDown){
+                if(c == 1f){
+                    c = 0.6f;
+                } else {
+                    c = 1f;
+                }
+                speedDown = true;
+            } else if (!gamepad1.right_bumper){
+                speedDown = false;
             }
 
-            if(gamepad1.left_bumper){
-                sweeper = 0.35f;
-            } else {
-                sweeper = 0;
+            if(gamepad1.left_bumper && !sweeperDown){
+                if(s == 1f){
+                    s = -1f;
+                } else {
+                    s = 1f;
+                }
+                sweeperDown = true;
+            } else if (!gamepad1.left_bumper){
+                sweeperDown = false;
             }
 
-            lPower = c*gamepad1.left_stick_y;
-            rPower = c*gamepad1.right_stick_y;
+            sweeper = s*gamepad1.left_trigger;
+
+            if(gamepad2.y){
+                armUp = true;
+            }
+
+            if(gamepad2.x){
+                armUp = false;
+            }
+
+            lPower = -c*gamepad1.left_stick_y;
+            rPower = - c*gamepad1.right_stick_y;
 
             robot.left.setPower(lPower);
             robot.right.setPower(rPower);
 
-            slide = gamepad2.left_stick_y;
+            slide = -gamepad2.left_stick_y;
 
             robot.slide.setPower(slide);
             robot.sweeper.setPower(sweeper);
+
+            if(armUp){
+                robot.arm.setPosition(0);
+            } else {
+                robot.arm.setPosition(1);
+            }
 
             telemetry.update();
 
